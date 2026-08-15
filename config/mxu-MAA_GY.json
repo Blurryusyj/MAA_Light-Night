@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "instances": [
+    {
+      "id": "8c0y4ls",
+      "name": "配置 1",
+      "controllerName": "Android",
+      "resourceName": "Default",
+      "savedDevice": {
+        "adbDeviceName": "MuMu安卓设备-MuMuPlayer v5+"
+      },
+      "tasks": [
+        {
+          "id": "9u2tvdh",
+          "taskName": "启动链",
+          "enabled": false,
+          "enabledByController": {
+            "Android": false
+          },
+          "optionValues": {}
+        },
+        {
+          "id": "uwx0p3i",
+          "taskName": "信使巡游",
+          "enabled": false,
+          "enabledByController": {
+            "Android": false
+          },
+          "optionValues": {}
+        },
+        {
+          "id": "de6hu87",
+          "taskName": "研习之旅",
+          "enabled": false,
+          "enabledByController": {
+            "Android": false
+          },
+          "optionValues": {}
+        },
+        {
+          "id": "32r3us6",
+          "taskName": "吃苹果",
+          "enabled": false,
+          "enabledByController": {
+            "Android": false
+          },
+          "optionValues": {}
+        },
+        {
+          "id": "w6rjvoe",
+          "taskName": "星座研究",
+          "enabled": false,
+          "enabledByController": {
+            "Android": false
+          },
+          "optionValues": {}
+        },
+        {
+          "id": "ic645bd",
+          "taskName": "StarHall",
+          "enabled": false,
+          "enabledByController": {
+            "Android": false
+          },
+          "optionValues": {}
+        },
+        {
+          "id": "8dtu3xh",
+          "taskName": "购物兑换",
+          "enabled": false,
+          "enabledByController": {
+            "Android": false
+          },
+          "optionValues": {}
+        },
+        {
+          "id": "x7ki678",
+          "taskName": "计划领取",
+          "enabled": true,
+          "enabledByController": {
+            "Android": true
+          },
+          "optionValues": {}
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "theme": "light",
+    "accentColor": "emerald",
+    "language": "system",
+    "backgroundOpacity": 50,
+    "confirmBeforeDelete": false,
+    "maxLogsPerInstance": 500,
+    "autoClearLogsOnLaunch": false,
+    "helpImproveSoftware": false,
+    "windowSize": {
+      "width": 1000,
+      "height": 618
+    },
+    "windowPosition": {
+      "x": 137,
+      "y": 202
+    },
+    "showOptionPreview": true,
+    "sidePanelExpanded": true,
+    "rightPanelWidth": 320,
+    "rightPanelCollapsed": false,
+    "addTaskPanelHeight": 192,
+    "connectionPanelExpanded": false,
+    "screenshotPanelExpanded": false,
+    "screenshotFrameRate": "1",
+    "mirrorChyan": {
+      "cdk": "",
+      "channel": "stable",
+      "cdkEncrypted": ""
+    },
+    "welcomeShownHash": "",
+    "devMode": false,
+    "tcpCompatMode": false,
+    "allowLanAccess": false,
+    "webServerEnabled": true,
+    "webServerPort": 12701,
+    "autoRunOnLaunch": false,
+    "minimizeToTray": false,
+    "onboardingCompleted": true,
+    "preActionConnectDelaySec": 5,
+    "hotkeys": {
+      "startTasks": "F10",
+      "stopTasks": "F11"
+    }
+  },
+  "customAccents": [],
+  "globalOptionValues": {},
+  "recentlyClosed": [],
+  "interfaceTaskSnapshot": [
+    "启动链",
+    "信使巡游",
+    "研习之旅",
+    "吃苹果",
+    "星座研究",
+    "StarHall",
+    "购物兑换",
+    "战斗三入口",
+    "战斗固定关卡",
+    "计划领取"
+  ],
+  "newTaskNames": [],
+  "lastActiveInstanceId": "8c0y4ls"
+}

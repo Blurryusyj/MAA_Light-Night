@@ -1,0 +1,97 @@
+{
+  "interface_version": 2,
+  "name": "MAA_GY",
+  "title": "MAA_GY",
+  "version": "0.3.2",
+  "description": "《光与夜之恋》日常自动化：勾选任务后按列表顺序一键执行。战斗拆分为三入口一条龙与固定关卡一条龙。",
+  "contact": "MAA_GY 本地开发工程，由用户与 Codex 共同维护。",
+  "controller": [
+    {
+      "name": "Android",
+      "label": "MuMu ADB",
+      "description": "通过 ADB 连接 MuMu 模拟器；Pipeline 按 736×1308 竖屏坐标系编写。",
+      "type": "Adb",
+      "display_short_side": 736
+    }
+  ],
+  "resource": [
+    {
+      "name": "Default",
+      "label": "默认资源",
+      "path": ["resource"],
+      "controller": ["Android"]
+    }
+  ],
+  "task": [
+    {
+      "name": "启动链",
+      "label": "1. 启动游戏",
+      "entry": "GYStartUp",
+      "default_check": true,
+      "description": "处理 SSO/QQ 登录、用户协议、系统公告、签到奖励，并恢复到首页"
+    },
+    {
+      "name": "信使巡游",
+      "label": "2. 信使巡游",
+      "entry": "XSXY",
+      "default_check": true,
+      "description": "领取巡游奖励，处理普通/特殊公招并返回首页"
+    },
+    {
+      "name": "研习之旅",
+      "label": "3. 研习之旅",
+      "entry": "YXZL",
+      "default_check": true,
+      "description": "使用可用加速次数、领取奖励并返回首页"
+    },
+    {
+      "name": "吃苹果",
+      "label": "4. 使用灵感道具",
+      "entry": "EatApple",
+      "default_check": true,
+      "description": "循环使用背包左一带小时标识的灵感道具；遇到天数道具时安全退出"
+    },
+    {
+      "name": "星座研究",
+      "label": "5. 星座研究",
+      "entry": "Constellation",
+      "default_check": true,
+      "description": "检查小熊星座周上限，未满时执行小熊座重现流程"
+    },
+    {
+      "name": "StarHall",
+      "label": "6. 星光展馆",
+      "entry": "StarHall",
+      "default_check": true,
+      "description": "处理特殊事件、选择展品、访问好友展厅并一键点赞"
+    },
+    {
+      "name": "购物兑换",
+      "label": "7. 商城兑换（月卡）",
+      "entry": "ShopMonthly",
+      "default_check": true,
+      "description": "领取月卡奖励，兑换小熊星座和灵感结晶后返回首页"
+    },
+    {
+      "name": "战斗三入口",
+      "label": "8. 战斗：初心＋极光＋铭迹",
+      "entry": "BattleTrio",
+      "default_check": false,
+      "description": "依次执行初心、极光、铭迹三个固定关卡，全部完成后返回首页。"
+    },
+    {
+      "name": "战斗固定关卡",
+      "label": "9. 战斗：长河＋外婆小铺",
+      "entry": "BattleFixedPair",
+      "default_check": false,
+      "description": "依次执行长河与外婆小铺固定关卡；角色和关卡沿用游戏内固定选择，完成后返回首页。"
+    },
+    {
+      "name": "计划领取",
+      "label": "10. 计划：一键领取",
+      "entry": "EndTask",
+      "default_check": false,
+      "description": "从 Home1/Home2 进入计划，点击一键领取并关闭全部奖励弹窗。"
+    }
+  ]
+}

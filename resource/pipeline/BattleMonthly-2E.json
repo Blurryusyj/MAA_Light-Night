@@ -1,0 +1,206 @@
+{
+  "BattleFixedPair": {
+    "doc": "长河＋外婆小铺独立入口。固定角色、固定关卡。",
+    "next": ["BattleFixedPair_Home_Dispatch"]
+  },
+
+  "BattleFixedPair_Home_Dispatch": {
+    "doc": "公共前置：归一到 Home2。",
+    "next": ["BattleFixedPair_Home2_Check", "BattleFixedPair_Home1_Check", "BattleFixedPair_Home_Back"]
+  },
+  "BattleFixedPair_Home2_Check": {
+    "recognition": "OCR",
+    "expected": "星座",
+    "roi": [17,997,87,53],
+    "action": "DoNothing",
+    "next": ["BattleFixedPair_West_Enter"]
+  },
+  "BattleFixedPair_Home1_Check": {
+    "recognition": "OCR",
+    "expected": "变奏",
+    "roi": [19,969,146,73],
+    "action": "DoNothing",
+    "next": ["BattleFixedPair_Home1_To_Home2"]
+  },
+  "BattleFixedPair_Home1_To_Home2": {
+    "recognition": "DirectHit",
+    "roi": [352,1061,32,31],
+    "target": [359,1070],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Home2_Check"]
+  },
+  "BattleFixedPair_Home_Back": {
+    "recognition": "DirectHit",
+    "roi": [30,10,63,65],
+    "target": [60,38],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Home_Dispatch"]
+  },
+  "BattleFixedPair_West_Enter": {
+    "recognition": "OCR",
+    "expected": "光启西岸",
+    "roi": [7,734,267,81],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_LongRiver_Entry"]
+  },
+
+  "BattleFixedPair_LongRiver_Entry": {
+    "doc": "长河：进入入口。",
+    "recognition": "OCR",
+    "expected": "长河",
+    "roi": [102,1029,99,48],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_LongRiver_FixedStage"]
+  },
+  "BattleFixedPair_LongRiver_FixedStage": {
+    "doc": "填写进入长河固定关卡",
+    "recognition": "DirectHit",
+    "roi": [92,1120,167,39],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_LongRiver_Round1_Replay"]
+  },
+  "BattleFixedPair_LongRiver_Round1_Replay": {
+    "doc": "长河第 1 次重现五次",
+    "recognition": "DirectHit",
+    "roi": [253,864,116,25],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 1000, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_LongRiver_Round1_ResultExit1"]
+  },
+  "BattleFixedPair_LongRiver_Round1_ResultExit1": {
+    "doc": "长河第 1 轮结果页退出 1",
+    "recognition": "DirectHit",
+    "roi": [206,86,318,47],
+    "target": true,
+    "action": "Click",
+    "post_wait_freezes": {"time": 300, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_LongRiver_Round2_Replay"]
+  },
+  "BattleFixedPair_LongRiver_Round2_Replay": {
+    "doc": "长河第 2 次重现五次",
+    "recognition": "DirectHit",
+    "roi": [253,864,116,25],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 1000, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_LongRiver_Round2_ResultExit1"]
+  },
+  "BattleFixedPair_LongRiver_Round2_ResultExit1": {
+    "doc": "长河第 2 轮结果页退出",
+    "roi": [206,86,318,47],
+    "target": true,
+    "action": "Click",
+    "post_wait_freezes": {"time": 300, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_LongRiver_ToFive_Back1"]
+  },
+  "BattleFixedPair_LongRiver_ToFive_Back1": {
+    "doc": "长河退到五入口。",
+    "recognition": "DirectHit",
+    "roi": [46,17,29,41],
+    "target": true,
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Five_Verify_AfterLongRiver"]
+  },
+  "BattleFixedPair_Five_Verify_AfterLongRiver": {
+    "doc": "确认长河结束后已回到五入口页面。",
+    "recognition": "OCR",
+    "expected": "长河",
+    "roi": [102,1029,99,48],
+    "action": "DoNothing",
+    "next": ["BattleFixedPair_Tailor_Entry"]
+  },
+
+  "BattleFixedPair_Tailor_Entry": {
+    "doc": "小铺：进入入口。",
+    "recognition": "OCR",
+    "expected": "SHOP",
+    "roi": [407,834,85,32],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Tailor_FixedStage"]
+  },
+  "BattleFixedPair_Tailor_FixedStage": {
+    "doc": "进入外婆小铺固定关卡。",
+    "recognition": "DirectHit",
+    "roi": [493,1052,131,37],
+    "target": true,
+    "action": "Click",
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Tailor_Replay"]
+  },
+  "BattleFixedPair_Tailor_Replay": {
+    "doc": "小铺重现五次",
+    "recognition": "OCR",
+    "expected": "重现五次",
+    "roi": [253,860,116,30],
+    "target": true,
+    "action": "Click",
+    "post_wait_freezes": {"time": 1000, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Tailor_ResultExit1"]
+  },
+  "BattleFixedPair_Tailor_ResultExit1": {
+    "doc": "小铺结果页退出",
+    "recognition": "DirectHit",
+    "roi": [206,86,318,47],
+    "target": true,
+    "action": "Click",
+    "post_wait_freezes": {"time": 300, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Tailor_ResultExit2"]
+  },
+  "BattleFixedPair_Tailor_ResultExit2": {
+    "doc": "小铺结果页退出",
+    "recognition": "DirectHit",
+    "roi": [206,86,318,47],
+    "target": true,
+    "action": "Click",
+    "post_wait_freezes": {"time": 300, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Tailor_ToFive_Back1"]
+  },
+  "BattleFixedPair_Tailor_ToFive_Back1": {
+    "doc": "小铺退到五入口。",
+    "recognition": "DirectHit",
+    "roi": [46,17,29,41],
+    "target": true,
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_Five_Verify_AfterTailor"]
+  },
+  "BattleFixedPair_Five_Verify_AfterTailor": {
+    "doc": "确认小铺结束后已回到五入口页面。",
+    "recognition": "OCR",
+    "expected": "长河",
+    "roi": [102,1029,99,48],
+    "action": "DoNothing",
+    "next": ["BattleFixedPair_ReturnHome"]
+  },
+
+  "BattleFixedPair_ReturnHome": {
+    "doc": "从五入口页面逐层返回首页。",
+    "next": ["BattleFixedPair_Home_Verify", "BattleFixedPair_Return_Click"]
+  },
+  "BattleFixedPair_Home_Verify": {
+    "recognition": "OCR",
+    "expected": "相伴",
+    "roi": [578,1220,92,49],
+    "action": "StopTask",
+    "timeout": 1500
+  },
+  "BattleFixedPair_Return_Click": {
+    "recognition": "DirectHit",
+    "target": [41,25],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleFixedPair_ReturnHome"]
+  }
+}

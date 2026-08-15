@@ -1,0 +1,152 @@
+{
+  "Constellation": {
+    "doc": "星座研究模块入口",
+    "next": ["Constellation_Home_Dispatch"]
+  },
+
+  "Constellation_Home_Dispatch": {
+    "doc": "星座研究必须从 Home2 开始。",
+    "next": ["Constellation_Home_Check", "Constellation_Home1_Check", "Constellation_Home_Back"]
+  },
+
+  "Constellation_Home_Check": {
+    "doc": "确认当前位于 Home2。",
+    "recognition": "OCR",
+    "expected": "星座",
+    "roi": [17,997,87,53],
+    "action": "DoNothing",
+    "timeout": 1500,
+    "next": ["Constellation_Enter"]
+  },
+
+  "Constellation_Home1_Check": {
+    "doc": "识别 Home1 后切换到 Home2。",
+    "recognition": "OCR",
+    "expected": "变奏",
+    "roi": [19,969,146,73],
+    "action": "DoNothing",
+    "next": ["Constellation_Home1_To_Home2"]
+  },
+
+  "Constellation_Home1_To_Home2": {
+    "doc": "Home1 切换到 Home2，并重新识别确认。",
+    "recognition": "DirectHit",
+    "roi": [352,1061,32,31],
+    "target": [359,1070],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["Constellation_Home_Check"]
+  },
+
+  "Constellation_Home_Back": {
+    "doc": "不在首页时返回并重新检查",
+    "recognition": "DirectHit",
+    "roi": [30,10,63,65],
+    "action": "Click",
+    "target": [60,38],
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["Constellation_Home_Dispatch"]
+  },
+
+  "Constellation_Enter": {
+    "doc": "从首页进入星座研究馆",
+    "recognition": "OCR",
+    "expected": "星座研究",
+    "roi": [14,1001,167,61],
+    "action": "Click",
+    "target": [14,1001],
+    "post_wait_freezes": {
+      "time": 800,
+      "target": [14,1001,167,61]
+    },
+    "next": ["Constellation_Cap_Full", "Constellation_Bear_Click"]
+  },
+
+  "Constellation_Cap_Full": {
+    "doc": "判断本周小熊星座是否已经达到800/800",
+    "recognition": "OCR",
+    "expected": "800/800",
+    "roi": [465,145,180,70],
+    "action": "DoNothing",
+    "timeout": 1500,
+    "next": ["Constellation_Back"]
+  },
+
+  "Constellation_Bear_Click": {
+    "doc": "未满时进入左侧小熊座",
+    "recognition": "OCR",
+    "expected": "熊座",
+    "roi": [140,774,113,63],
+    "action": "Click",
+    "target": [140,774],
+    "post_wait_freezes": {
+      "time": 700,
+      "target":[140,774,113,63]
+    },
+    "next": ["Constellation_Reappear"]
+  },
+
+  "Constellation_Reappear": {
+    "doc": "点击小熊座详情中的重现",
+    "recognition": "OCR",
+    "expected": "重现",
+    "roi": [64,872,154,46],
+    "action": "Click",
+    "target": [105, 877],
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [64,872,154,46]
+    },
+    "next": ["Constellation_Weekly_Reward_1"]
+  },
+
+  "Constellation_Weekly_Reward_1": {
+    "doc": "第一次点击本周获得小熊星座",
+    "recognition": "OCR",
+    "expected": "本周获得小熊星座",
+    "roi": [510,126,210,37],
+    "action": "Click",
+    "target": [510,126],
+    "post_wait_freezes": {
+      "time": 300,
+      "target": [510,126,210,37]
+    },
+    "next": ["Constellation_Weekly_Reward_2"]
+  },
+
+  "Constellation_Weekly_Reward_2": {
+    "doc": "第二次点击本周获得小熊星座",
+    "recognition": "OCR",
+    "expected": "本周获得小熊星座",
+   "roi": [510,126,210,37],
+    "action": "Click",
+    "target": [510,126],
+    "post_wait_freezes": {
+      "time": 300,
+      "target": [510,126,210,37]
+    },
+    "next": ["Constellation_Back"]
+  },
+
+  "Constellation_Back": {
+    "doc": "返回游戏首页",
+    "recognition": "DirectHit",
+    "roi": [30,10,63,65],
+    "action": "Click",
+    "target": [49, 23],
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [30,10,63,65]
+    },
+    "next": ["Constellation_Home_Verify"]
+  },
+
+  "Constellation_Home_Verify": {
+    "doc": "确认已经返回首页",
+    "recognition": "OCR",
+    "expected": "星座研究",
+    "roi": [19,999,163,56],
+    "action": "StopTask",
+    "timeout": 5000
+  }
+}

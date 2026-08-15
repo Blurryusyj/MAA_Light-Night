@@ -1,0 +1,244 @@
+{
+  "StarHall": {
+    "doc": "星光展馆模块入口",
+    "next": ["StarHall_Home_Dispatch"]
+  },
+  "StarHall_Home_Dispatch": {
+    "doc": "星光展馆必须从 Home2 开始。",
+    "next": ["StarHall_Home_Check", "StarHall_Home1_Check", "StarHall_Home_Back"]
+  },
+  "StarHall_Home_Check": {
+    "doc": "确认当前位于 Home2。",
+    "recognition": "OCR",
+    "expected": "星座",
+    "roi": [17,997,87,53],
+    "action": "DoNothing",
+    "timeout": 1500,
+    "next": ["StarHall_Enter"]
+  },
+  "StarHall_Home1_Check": {
+    "doc": "识别 Home1 后切换到 Home2。",
+    "recognition": "OCR",
+    "expected": "变奏",
+    "roi": [19,969,146,73],
+    "action": "DoNothing",
+    "next": ["StarHall_Home1_To_Home2"]
+  },
+  "StarHall_Home1_To_Home2": {
+    "doc": "Home1 切换到 Home2，并重新识别确认。",
+    "recognition": "DirectHit",
+    "roi": [352,1061,32,31],
+    "target": [359,1070],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["StarHall_Home_Check"]
+  },
+  "StarHall_Home_Back": {
+    "doc": "不在首页时返回并重新检查",
+    "recognition": "DirectHit",
+    "roi": [99,18,61,49],
+    "action": "Click",
+    "target": [120,40],
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["StarHall_Home_Dispatch"]
+  },
+  "StarHall_Enter": {
+    "doc": "从首页进入星光展馆",
+    "recognition": "OCR",
+    "expected": "星光展馆",
+    "roi": [551,1091,161,51],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 800,
+      "target": [0,0,736,1308]
+    },
+    "next": [
+       "StarHall_Dispatch"
+    ]
+  },
+  "StarHall_Dispatch": {
+    "doc": "依次判断特殊事件、展览结束或进入好友展厅",
+    "next": [
+      "StarHall_Special_Event_Check",
+      "StarHall_Exhibition_End_Check",
+      "StarHall_Friend_Hall"
+    ]
+  },
+  "StarHall_Special_Event_Check": {
+    "doc": "检查是否弹出特殊事件",
+    "recognition": "OCR",
+    "expected": "特殊事件",
+    "roi": [54,288,155,47],
+    "action": "DoNothing",
+    "timeout": 1200,
+    "next": [
+      "StarHall_Perfect_Click"
+    ]
+  },
+  "StarHall_Perfect_Click": {
+    "doc": "识别Perfect标识（兼容OCR误识别Perdect）并点击其下方选项",
+    "recognition": "OCR",
+    "expected": "Per",
+    "roi": [75,589,601,318],
+    "action": "Click",
+    "target": true,
+    "target_offset": [0,60,0,0],
+    "post_wait_freezes": {
+      "time": 300,
+      "target": [0,0,736,1308]
+    },
+    "next": ["StarHall_Event_Action_Choose"]
+  },
+  "StarHall_Event_Action_Choose": {
+    "doc": "特殊事件完成后判断确定或继续",
+    "next": ["StarHall_Event_Confirm", "StarHall_Continue"]
+  },
+  "StarHall_Event_Confirm": {
+    "doc": "点击特殊事件中的确定",
+    "recognition": "OCR",
+    "expected": "确定",
+    "roi": [220,900,300,100],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["StarHall_Dispatch"]
+  },
+  "StarHall_Continue": {
+    "doc": "继续特殊事件",
+    "recognition": "OCR",
+    "expected": "继续",
+    "roi": [243,967,252,58],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [0,0,736,1308]
+    },
+    "next": [
+      "StarHall_Dispatch"
+    ]
+  },
+  "StarHall_Exhibition_End_Check": {
+    "doc": "检查展览是否结束",
+    "recognition": "OCR",
+    "expected": "展览结束",
+    "roi": [154,316,430,127],
+    "action": "DoNothing",
+    "timeout": 1200,
+    "next": [
+      "StarHall_Popularity"
+    ]
+  },
+  "StarHall_Popularity": {
+    "doc": "进入人气页面",
+    "recognition": "OCR",
+    "expected": "人气",
+    "roi":[181,496,74,39],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [0,0,736,1308]
+    },
+    "next": [
+      "StarHall_Add_Choose"
+    ]
+  },
+  "StarHall_Add_Choose": {
+    "doc": "判断是否存在添加展品入口",
+    "next": [
+      "StarHall_Add_Exhibit",
+      "StarHall_Friend_Hall"
+    ]
+  },
+  "StarHall_Add_Exhibit": {
+    "doc": "点击添加展品",
+    "recognition": "OCR",
+    "expected": "添加展品",
+    "roi": [283,727,169,44],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [0,0,736,1308]
+    },
+    "next": [
+      "StarHall_OneKey_Select"
+    ]
+  },
+  "StarHall_OneKey_Select": {
+    "doc": "一键选定展品",
+    "recognition": "OCR",
+    "expected": "一键选定",
+    "roi": [454,770,126,33],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 300,
+      "target": [0,0,736,1308]
+    },
+    "next": [
+      "StarHall_Select"
+    ]
+  },
+  "StarHall_Select": {
+    "doc": "确认选定展品",
+    "recognition": "OCR",
+    "expected": "选定",
+    "roi": [319,695,97,47],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 2000,
+      "target": [0,0,736,1308]
+    },
+    "next": [
+      "StarHall_Friend_Hall"
+    ]
+  },
+  "StarHall_Friend_Hall": {
+    "doc": "进入好友展厅",
+    "recognition": "OCR",
+    "expected": "好友展厅",
+    "roi": [504,1226,155,51],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 700,
+      "target":[0,0,736,1308]
+    },
+    "next": [
+      "StarHall_Like_All"
+    ]
+  },
+  "StarHall_Like_All": {
+    "doc": "点击好友展厅右上角一键点赞",
+    "recognition": "OCR",
+    "expected": "点赞",
+    "roi": [533,99,171,50],
+    "action": "Click",
+    "target": [547, 109],
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [0,0,736,1308]
+    },
+    "next": [
+      "StarHall_Home"
+    ]
+  },
+  "StarHall_Home": {
+    "doc": "点击小房子返回首页",
+    "recognition": "DirectHit",
+    "roi": [99,18,61,49],
+    "action": "Click",
+    "target": [113, 29],
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [0,0,736,1308]
+    },
+    "next": [
+      "StarHall_Home_Verify"
+    ]
+  },
+  "StarHall_Home_Verify": {
+    "doc": "确认返回游戏首页",
+    "recognition": "OCR",
+    "expected": "星光展馆",
+    "roi":[546,1093,163,49],
+    "action": "StopTask",
+    "timeout": 5000
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "XSXY": {
+    "doc": "信使巡游模块入口",
+    "next": ["XSXY_Home_Dispatch"]
+  },
+  "XSXY_Home_Dispatch": {
+    "doc": "信使巡游必须从 Home1 开始。",
+    "next": ["XSXY_Home1_Check", "XSXY_Home2_Check", "XSXY_Home_Back"]
+  },
+  "XSXY_Home1_Check": {
+    "recognition": "OCR",
+    "expected": "变奏",
+    "roi": [19,969,146,73],
+    "action": "DoNothing",
+    "next": ["XSXY_Start_Touch"]
+  },
+  "XSXY_Home2_Check": {
+    "recognition": "OCR",
+    "expected": "星座",
+    "roi": [17,997,87,53],
+    "action": "DoNothing",
+    "next": ["XSXY_Home2_To_Home1"]
+  },
+  "XSXY_Home2_To_Home1": {
+    "doc": "Home2 切换到 Home1，并重新识别确认。",
+    "recognition": "DirectHit",
+    "roi": [349,1059,37,37],
+    "target": [359,1065],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["XSXY_Home1_Check"]
+  },
+  "XSXY_Home_Back": {
+    "doc": "不在 Home1/Home2 时点击左上角返回，再重新判断首页页签。",
+    "recognition": "DirectHit",
+    "roi": [24,10,69,58],
+    "action": "Click",
+    "target": [59,39],
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["XSXY_Home_Dispatch"]
+  },
+  "XSXY_Start_Touch": {
+    "doc": "从主界面进入信使巡游",
+    "recognition": "OCR",
+    "expected": "信使巡游",
+    "roi": [613,906,121,34],
+    "action": "Click",
+    "post_wait_freezes": {"time": 800, "target": [0, 0, 736, 1308]},
+    "next": ["XSXY_Get_Choose"]
+  },
+  "XSXY_Start_GongZhao": {
+    "doc": "普通公招：点击自由游览",
+    "recognition": "OCR",
+    "expected": "自由游览",
+    "roi": [310,854,150,47],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+    "next": ["XSXY_Confirm_GongZhao"]
+  },
+  "XSXY_Confirm_GongZhao": {
+    "doc": "确认普通公招",
+    "recognition": "OCR",
+    "expected": "确定",
+    "roi": [397,925,248,59],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+    "next": ["XSXY_Back"]
+  },
+"XSXY_Back": {
+  "doc": "点击左上角返回按钮",
+  "recognition": "DirectHit",
+  "action": "Click",
+  "target": [59, 39],
+  "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+  "roi": [24,10,69,58],
+  "post_delay": 500,
+  "next": ["XSXY_Back_Verify"]
+},
+
+"XSXY_Back_Verify": {
+  "doc": "确认离开信使巡游页面",
+  "recognition": "OCR",
+  "expected": "信使巡游",
+  "roi": [580, 880, 150, 100],
+  "action": "StopTask",
+  "timeout": 5000
+},
+  "XSXY_Get_Click": {
+    "doc": "识别并领取信使巡游奖励",
+    "recognition": "OCR",
+    "expected": "领取",
+    "roi": [211,1096,320,60],
+    "action": "Click",
+    "post_delay": 5000,
+    "next": ["XSXY_Get_Char1"]
+  },
+
+  "XSXY_Get_Choose": {
+    "doc": "判断提前返回、是否收菜或进入公招",
+    "next": [
+      "XSXY_Early_Back_Check",
+      "XSXY_Get_Click",
+      "XSXY_GongZhao_Choose"
+    ]
+  },
+
+  "XSXY_Early_Back_Check": {
+    "doc": "识别预计返程状态并直接返回",
+    "recognition": "OCR",
+    "expected": "预计返程",
+    "roi": [308,753,141,44],
+    "action": "DoNothing",
+    "timeout": 1000,
+    "next": ["XSXY_Back"]
+  },
+  "XSXY_Get_Char1": {
+    "doc": "等待奖励卡面稳定后点击卡面空白区域关闭",
+    "recognition": "DirectHit",
+    "roi": [125,25,361,33],
+    "action": "Click",
+    "target": [182, 38],
+    "pre_delay": 500,
+    "next": ["XSXY_Get_Char2"]
+  },
+  "XSXY_Get_Char2": {
+  "doc": "识别并关闭领取后的奖励弹窗",
+  "recognition": "OCR",
+  "expected": "恭喜获得",
+  "roi": [230,374,272,62],
+  "action": "Click",
+  "next": ["XSXY_GongZhao_Choose"]
+}, 
+"XSXY_GongZhao_Choose": {
+  "doc": "判断特殊公招或普通公招",
+  "next": [
+    "XSXY_SpecialGZ_IFELSE",
+    "XSXY_Start_GongZhao"
+  ]
+},
+"XSXY_SpecialGZ_IFELSE": {
+  "doc": "特殊公招：选择特殊选项",
+  "recognition": "OCR",
+  "expected": "真难选啊……你帮我决定吧！",
+  "roi": [200,124,327,36],
+  "action": "Click",
+  "target": [224,427,37,26],
+  "next": ["XSXY_SpecialGZ_Confirm"]
+},
+
+"XSXY_SpecialGZ_Confirm": {
+  "doc": "确认特殊公招选择",
+  "recognition": "OCR",
+  "expected": "选好了",
+  "roi":[208,1155,310,55],
+  "action": "Click",
+  "next": ["XSXY_SpecialBack"]
+},
+"XSXY_SpecialBack": {
+  "doc": "关闭特殊公招结果并返回",
+  "recognition": "DirectHit",
+  "roi": [128,196,38,35],
+  "action": "Click",
+  "pre_delay": 3000,
+  "next": ["XSXY_Back"]
+}
+
+  }

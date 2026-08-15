@@ -1,0 +1,234 @@
+{
+  "BattleTrio": {
+    "doc": "初心、极光、铭迹一条龙入口。",
+    "next": ["BattleTrio_Home_Dispatch"]
+  },
+  "BattleTrio_Home_Dispatch": {
+    "doc": "三入口战斗必须从 Home2 开始。",
+    "next": ["BattleTrio_Home2_Check", "BattleTrio_Home1_Check", "BattleTrio_Home_Back"]
+  },
+  "BattleTrio_Home2_Check": {
+    "recognition": "OCR",
+    "expected": "星座",
+    "roi": [17,997,87,53],
+    "action": "DoNothing",
+    "next": ["BattleTrio_West_Enter"]
+  },
+  "BattleTrio_Home1_Check": {
+    "recognition": "OCR",
+    "expected": "变奏",
+    "roi": [19,969,146,73],
+    "action": "DoNothing",
+    "next": ["BattleTrio_Home1_To_Home2"]
+  },
+  "BattleTrio_Home1_To_Home2": {
+    "doc": "Home1 切换到 Home2，并重新识别确认。",
+    "recognition": "DirectHit",
+    "roi": [352,1061,32,31],
+    "target": [359,1070],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Home2_Check"]
+  },
+  "BattleTrio_Home_Back": {
+    "doc": "不在 Home1/Home2 时返回，再重新判断首页页签。",
+    "recognition": "DirectHit",
+    "roi": [30,10,63,65],
+    "target": [60,38],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Home_Dispatch"]
+  },
+  "BattleTrio_West_Enter": {
+    "doc": "从 Home2 进入光启西岸。",
+    "recognition": "OCR",
+    "expected": "光启西岸",
+    "roi": [7,734,267,81],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Encounter_Entry"]
+  },
+
+  "BattleTrio_Encounter_Entry": {
+    "doc": "第一段：进入初心。",
+    "recognition": "OCR",
+    "expected": "初心",
+    "roi": [107,239,92,43],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Encounter_Stage_Select"]
+  },
+  "BattleTrio_Encounter_Stage_Select": {
+    "recognition": "OCR",
+    "expected": "遇见",
+    "roi": [92,971,69,41],
+    "action": "Click",
+    "target": true,
+    "next": ["BattleTrio_Encounter_Replay"]
+  },
+  "BattleTrio_Encounter_Replay": {
+    "recognition": "OCR",
+    "expected": "重现",
+    "roi": [114,882,60,29],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Encounter_AfterReplay_Entry"]
+  },
+  "BattleTrio_Encounter_AfterReplay_Entry": {
+    "doc": "重现后点击遇/对应战斗入口。",
+    "recognition": "DirectHit",
+    "roi": [202,102,346,68],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Encounter_SecondEntry"]
+  },
+  "BattleTrio_Encounter_SecondEntry": {
+    "doc": "回到战斗选择页后再次点击对应入口。",
+    "recognition": "DirectHit",
+    "roi": [202,102,346,68],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Encounter_Exit"]
+  },
+  "BattleTrio_Encounter_Exit": {
+    "doc": "初心完成，退出到五入口页面并继续极光。",
+    "recognition": "DirectHit",
+    "roi": [31,15,53,50],
+    "target": [48,28],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Aurora_Entry"]
+  },
+
+  "BattleTrio_Aurora_Entry": {
+    "doc": "第二段：进入极光。",
+    "recognition": "OCR",
+    "expected": "极光",
+    "roi": [338,443,88,45],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Aurora_Stage_Select"]
+  },
+  "BattleTrio_Aurora_Stage_Select": {
+    "recognition": "OCR",
+    "expected": "遇见",
+    "roi": [93,972,68,37],
+    "action": "Click",
+    "target": true,
+    "next": ["BattleTrio_Aurora_Replay"]
+  },
+  "BattleTrio_Aurora_Replay": {
+    "recognition": "OCR",
+    "expected": "重现",
+    "roi": [109,880,69,31],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Aurora_AfterReplay_Entry"]
+  },
+  "BattleTrio_Aurora_AfterReplay_Entry": {
+    "doc": "重现后点击遇/对应战斗入口。",
+    "recognition": "DirectHit",
+    "roi": [202,102,346,68],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Aurora_SecondEntry"]
+  },
+  "BattleTrio_Aurora_SecondEntry": {
+    "doc": "回到战斗选择页后再次点击对应入口。",
+    "recognition": "DirectHit",
+    "roi": [202,102,346,68],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Aurora_Exit"]
+  },
+  "BattleTrio_Aurora_Exit": {
+    "doc": "极光完成，退出到五入口页面并继续铭迹。",
+    "recognition": "DirectHit",
+    "roi": [31,15,53,50],
+    "target": [48,28],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Inscription_Entry"]
+  },
+
+  "BattleTrio_Inscription_Entry": {
+    "doc": "第三段：进入铭迹。",
+    "recognition": "OCR",
+    "expected": "铭迹",
+    "roi": [581,366,94,43],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Inscription_Stage_Select"]
+  },
+  "BattleTrio_Inscription_Stage_Select": {
+    "recognition": "OCR",
+    "expected": "遇见",
+    "roi": [93,972,68,37],
+    "action": "Click",
+    "target": true,
+    "next": ["BattleTrio_Inscription_Replay"]
+  },
+  "BattleTrio_Inscription_Replay": {
+    "recognition": "OCR",
+    "expected": "重现",
+    "roi": [109,880,69,31],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Inscription_AfterReplay_Entry"]
+  },
+  "BattleTrio_Inscription_AfterReplay_Entry": {
+    "doc": "重现后点击遇/对应战斗入口。",
+    "recognition": "DirectHit",
+    "roi": [202,102,346,68],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Inscription_SecondEntry"]
+  },
+  "BattleTrio_Inscription_SecondEntry": {
+    "doc": "回到战斗选择页后再次点击对应入口。",
+    "recognition": "DirectHit",
+    "roi": [202,102,346,68],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_Inscription_Exit"]
+  },
+  "BattleTrio_Inscription_Exit": {
+    "doc": "铭迹完成，退出到五入口页面并返回首页。",
+    "recognition": "DirectHit",
+    "roi": [31,15,53,50],
+    "target": [48,28],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_ReturnHome"]
+  },
+  "BattleTrio_ReturnHome": {
+    "next": ["BattleTrio_Home_Verify", "BattleTrio_Return_Click"]
+  },
+  "BattleTrio_Home_Verify": {
+    "recognition": "OCR",
+    "expected": "相伴",
+    "roi": [578,1220,92,49],
+    "action": "StopTask",
+    "timeout": 1500
+  },
+  "BattleTrio_Return_Click": {
+    "recognition": "DirectHit",
+    "action": "Click",
+    "target": [41,25],
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["BattleTrio_ReturnHome"]
+  }
+}

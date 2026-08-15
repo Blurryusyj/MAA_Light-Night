@@ -1,0 +1,289 @@
+{
+  "ShopMonthly": {
+    "doc": "商城兑换（月卡）入口：月卡领取后依次检查小熊星座与灵感结晶。",
+    "next": ["Shop_Home_Dispatch"]
+  },
+  "Shop_Home_Dispatch": {
+    "doc": "商城必须从 Home1 开始。",
+    "next": ["Shop_Home1_Check", "Shop_Home2_Check", "Shop_Home_Back"]
+  },
+  "Shop_Home1_Check": {
+    "recognition": "OCR",
+    "expected": "变奏",
+    "roi": [17,968,149,71],
+    "action": "DoNothing",
+    "next": ["Shop_Enter"]
+  },
+  "Shop_Home2_Check": {
+    "recognition": "OCR",
+    "expected": "星座",
+    "roi": [17,997,87,53],
+    "action": "DoNothing",
+    "next": ["Shop_Home2_To_Home1"]
+  },
+  "Shop_Home2_To_Home1": {
+    "recognition": "DirectHit",
+    "roi": [349,1059,37,37],
+    "target": [359,1065],
+    "action": "Click",
+    "doc": "Home2 切换到 Home1",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["Shop_Home1_Check"]
+  },
+  "Shop_Home_Back": {
+    "doc": "不在 Home1/Home2 时点击左上角返回，再重新判断首页页签。",
+    "recognition": "DirectHit",
+    "roi": [30,10,63,65],
+    "action": "Click",
+    "target": [60,38],
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["Shop_Home_Dispatch"]
+  },
+  "Shop_Enter": {
+    "doc": "从 Home1 点击右上角购物。",
+    "recognition": "OCR",
+    "expected": "购物",
+    "roi":[596,110,73,38],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0, 0, 736, 1308]},
+    "next": ["Shop_Monthly_Value"]
+  },
+  "Shop_Monthly_Value": {
+    "doc": "月卡专属：点击超值。",
+    "recognition": "OCR",
+    "roi": [517,153,53,28],
+    "expected": "超值",
+    "action": "Click",
+    "target": true,
+    "next": ["Shop_Claim_Dispatch"]
+  },
+  "Shop_Claim_Dispatch": {
+    "doc": "可领取则领取；已领取时直接进入兑换。",
+    "next": ["Shop_Claim", "Shop_Exchange_Enter"]
+  },
+  "Shop_Claim": {
+    "recognition": "OCR",
+    "expected": "领取",
+    "action": "Click",
+    "roi": [337,938,67,32],
+    "target": true,
+    "timeout": 1500,
+    "next": ["Shop_Claim_After_Dispatch"]
+  },
+  "Shop_Claim_After_Dispatch": {
+    "next": ["Shop_Claim_Reward", "Shop_Exchange_Enter"]
+  },
+  "Shop_Claim_Reward": {
+    "recognition": "OCR",
+    "expected": "恭",
+    "roi": [247,384,40,39],
+    "action": "Click",
+    "target": true,
+    "timeout": 2500,
+    "next": ["Shop_Exchange_Enter"]
+  },
+  "Shop_Exchange_Enter": {
+    "recognition": "OCR",
+    "roi": [631,153,52,28],
+    "expected": "兑换",
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 700, "target": [0, 0, 736, 1308]},
+    "next": ["Shop_Study_Find_0"]
+  },
+
+  "Shop_Study_Find_0": {"next": ["Shop_Study_Category", "Shop_Study_Swipe_1"]},
+  "Shop_Study_Swipe_1": {
+    "doc": "第 1 次从左向右拖动分类栏",
+    "action": "Swipe", 
+    "begin":[645, 235],
+    "end":[45, 246],
+    "next": ["Shop_Study_Find_1"]
+  },
+  "Shop_Study_Find_1": {"next": ["Shop_Study_Category", "Shop_Study_Swipe_2"]},
+  "Shop_Study_Swipe_2": {
+    "doc": "第 2 次分类栏拖动。",
+    "action": "Swipe", 
+    "begin":[645, 235],
+    "end":[45, 246],
+    "next": ["Shop_Study_Find_2"]
+  },
+  "Shop_Study_Find_2": {"next": ["Shop_Study_Category", "Shop_Study_Swipe_3"]},
+  "Shop_Study_Swipe_3": {
+    "doc": "第 3 次反向拖动分类栏。", 
+    "action": "Swipe", 
+    "begin":[45, 246],
+    "end":[645, 235],
+    "next": ["Shop_Study_Find_3"]
+  },
+  "Shop_Study_Find_3": {"next": ["Shop_Study_Category", "Shop_Study_Swipe_4"]},
+  "Shop_Study_Swipe_4": {
+    "doc": "第 4 次分类栏拖动。", 
+    "action": "Swipe", 
+    "begin":[645, 235],
+    "end":[45, 246],
+    "next": ["Shop_Study_Find_4"]
+  },
+  "Shop_Study_Find_4": {"next": ["Shop_Study_Category", "Shop_Study_Swipe_5"]},
+  "Shop_Study_Swipe_5": {
+    "doc": "第 5 次分类栏拖动。", 
+    "action": "Swipe", 
+    "begin":[645, 235],
+    "end":[45, 246],
+    "next": ["Shop_Study_Find_5"]
+  },
+  "Shop_Study_Find_5": {"next": ["Shop_Study_Category", "Shop_Study_Not_Found"]},
+  "Shop_Study_Category": {
+    "recognition": "OCR",
+    "roi": [7,218,728,77],
+    "expected": "研习",
+    "action": "Click",
+    "target": true,
+    "timeout": 1000,
+    "next": ["Shop_Bear_Available_Dispatch"]
+  },
+  "Shop_Study_Not_Found": {
+    "doc": "5 次后仍未找到研习；日志会记录本节点，随后跳过该商品。",
+    "action": "DoNothing",
+    "next": ["Shop_Exhibition_Find_0"]
+  },
+  "Shop_Bear_Available_Dispatch": {
+    "doc": "识别并点击小熊星座；未出现或点击后无兑换按钮时视为不可兑换。",
+    "next": ["Shop_Bear_Select", "Shop_Exhibition_Find_0"]
+  },
+  "Shop_Bear_Select": {
+    "recognition": "OCR",
+    "expected": "小熊星座",
+    "roi": [46,405,101,29],
+    "action": "Click",
+    "target": true,
+    "timeout": 1500,
+    "next": ["Shop_Bear_Exchange"]
+  },
+  "Shop_Bear_Exchange": {
+    "doc": "限定商品详情弹窗内的兑换按钮。",
+    "recognition": "OCR",
+    "expected": "兑换",
+    "roi":[323,734,79,36],
+    "action": "Click",
+    "target": true,
+    "timeout": 2000,
+    "next": ["Shop_Bear_Reward"],
+    "on_error": ["Shop_Exhibition_Find_0"]
+  },
+  "Shop_Bear_Reward": {
+    "recognition": "OCR",
+    "expected": "恭",
+    "roi": [247,384,40,39],
+    "action": "Click",
+    "target": true,
+    "timeout": 1500,
+    "next": ["Shop_Exhibition_Find_0"]
+  },
+
+  "Shop_Exhibition_Find_0": {"next": ["Shop_Exhibition_Category", "Shop_Exhibition_Swipe_1"]},
+  "Shop_Exhibition_Swipe_1": {
+    "doc": "第 1 次从左向右拖动分类栏",
+    "action": "Swipe", 
+    "begin":[155, 247],
+    "end":[36, 243],
+    "next": ["Shop_Exhibition_Find_1"]
+  },
+  "Shop_Exhibition_Find_1": {"next": ["Shop_Exhibition_Category", "Shop_Exhibition_Swipe_2"]},
+  "Shop_Exhibition_Swipe_2": {
+    "doc": "第 2 次分类栏拖动。",
+    "action": "Swipe", 
+    "begin":[155, 247],
+    "end":[36, 243],
+      "next": ["Shop_Exhibition_Find_2"]
+  },
+  "Shop_Exhibition_Find_2": {"next": ["Shop_Exhibition_Category", "Shop_Exhibition_Swipe_3"]},
+  "Shop_Exhibition_Swipe_3": {
+    "doc": "第 3 次反向拖动分类栏。", 
+    "action": "Swipe", 
+    "begin":[36, 243],
+    "end":[155, 247],
+    "next": ["Shop_Exhibition_Find_3"]
+  },
+  "Shop_Exhibition_Find_3": {"next": ["Shop_Exhibition_Category", "Shop_Exhibition_Swipe_4"]},
+  "Shop_Exhibition_Swipe_4": {
+    "doc": "第 4 次分类栏拖动。", 
+    "action": "Swipe", 
+    "begin":[155, 247],
+    "end":[36, 243],
+    "next": ["Shop_Exhibition_Find_4"]
+  },
+  "Shop_Exhibition_Find_4": {"next": ["Shop_Exhibition_Category", "Shop_Exhibition_Swipe_5"]},
+  "Shop_Exhibition_Swipe_5": {
+    "doc": "第 5 次分类栏拖动。", 
+    "action": "Swipe", 
+    "begin":[155, 247],
+    "end":[36, 243],
+     "next": ["Shop_Exhibition_Find_5"]
+  },
+  "Shop_Exhibition_Find_5": {"next": ["Shop_Exhibition_Category", "Shop_Exhibition_Not_Found"]},
+  "Shop_Exhibition_Category": {
+    "recognition": "OCR",
+    "roi": [7,218,728,77],
+    "expected": "展会",
+    "action": "Click",
+    "target": true,
+    "timeout": 1000,
+    "next": ["Shop_Inspiration_Available_Dispatch"]
+  },
+  "Shop_Exhibition_Not_Found": {
+    "doc": "5 次后仍未找到展会；日志会记录本节点，随后返回首页。",
+    "action": "DoNothing",
+    "next": ["Shop_Return_Home"]
+  },
+  "Shop_Inspiration_Available_Dispatch": {
+    "doc": "识别并点击灵感结晶；未出现或点击后无兑换按钮时视为不可兑换。",
+    "next": ["Shop_Inspiration_Select", "Shop_Return_Home"]
+  },
+  "Shop_Inspiration_Select": {
+    "recognition": "OCR",
+    "roi": [48,402,101,33],
+    "expected": "灵感结晶",
+    "action": "Click",
+    "target": true,
+    "timeout": 1500,
+    "next": ["Shop_Inspiration_Exchange"]
+  },
+  "Shop_Inspiration_Exchange": {
+    "doc": "限定商品详情弹窗内的兑换按钮。",
+    "recognition": "OCR",
+    "expected": "兑换",
+    "roi":[323,734,79,36],
+    "action": "Click",
+    "target": true,
+    "timeout": 2000,
+    "next": ["Shop_Inspiration_Reward"],
+    "on_error": ["Shop_Return_Home"]
+  },
+  "Shop_Inspiration_Reward": {
+    "recognition": "OCR",
+    "expected": "恭",
+    "roi": [247,384,40,39],
+    "action": "Click",
+    "target": true,
+    "timeout": 1500,
+    "next": ["Shop_Return_Home"]
+  },
+
+  "Shop_Return_Home": {
+    "recognition": "DirectHit",
+    "action": "Click",
+    "target": [ 41, 25],
+    "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+    "next": ["Shop_Home1_Verify"]
+  },
+  "Shop_Home1_Verify": {
+    "recognition": "OCR",
+    "expected": "相伴",
+    "roi": [578,1220,92,49],
+    "action": "StopTask",
+    "timeout": 1500,
+    "on_error": ["Shop_Return_Home"]
+  }
+}

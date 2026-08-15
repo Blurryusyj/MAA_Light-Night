@@ -1,0 +1,131 @@
+{
+  "EatApple": {
+    "doc": "使用背包中左一带有小时标识的灵感道具",
+    "next": ["EatApple_Home_Check"],
+    "timeout": 1500,
+    "on_error": ["EatApple_Home_Back"]
+  },
+
+  "EatApple_Home_Check": {
+    "doc": "确认从首页进入物品背包",
+    "recognition": "OCR",
+    "expected": "相伴",
+    "roi": [564,1215,111,55],
+    "action": "DoNothing",
+    "timeout": 500,
+    "next": ["EatApple_Item_Enter"]
+  },
+
+  "EatApple_Home_Back": {
+    "doc": "不在首页时返回并重新检查",
+    "recognition": "DirectHit",
+    "roi": [30,11,61,54],
+    "action": "Click",
+    "target": [60,38],
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["EatApple_Home_Check"]
+  },
+
+  "EatApple_Item_Enter": {
+    "doc": "从主界面进入物品背包",
+    "recognition": "OCR",
+    "expected": "物品",
+    "roi": [364,1248,60,39],
+    "action": "Click",
+    "target": [332, 1220],
+    "post_wait_freezes": {
+      "time": 500,
+      "target":[367,1247,55,40]
+    },
+    "next": ["EatApple_Available_Choose"]
+  },
+
+  "EatApple_Hour_Check": {
+    "doc": "检查背包左一道具是否带有小时到期标识",
+    "recognition": "OCR",
+    "expected": "小时",
+    "roi": [50,279,50,31],
+    "action": "Click",
+    "target": [65, 336],
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [50,279,50,31]
+    },
+    "next": ["EatApple_Max"]
+  },
+
+  "EatApple_Max": {
+    "doc": "选择当前道具的最大使用数量",
+    "recognition": "OCR",
+    "expected": "最多",
+    "roi": [481,642,123,48],
+    "action": "Click",
+    "target": [510, 652],
+    "next": ["EatApple_Confirm"]
+  },
+
+  "EatApple_Confirm": {
+    "doc": "确认使用道具",
+    "recognition": "OCR",
+    "expected": "确定",
+    "roi":[396,923,250,62],
+    "action": "Click",
+    "target": [483, 937],
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [396,923,250,62]
+    },
+    "next": ["EatApple_Reward"]
+  },
+
+  "EatApple_Reward": {
+    "doc": "识别并关闭使用道具后的奖励弹窗",
+    "recognition": "OCR",
+    "expected": "恭喜",
+    "roi": [235,380,263,47],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 300,
+      "target":[235,380,263,47]
+    },
+    "next": ["EatApple_Available_Choose"]
+  },
+
+  "EatApple_Available_Choose": {
+    "doc": "判断左一道具是小时道具还是天数道具",
+    "next": ["EatApple_Hour_Check", "EatApple_Day_Check"],
+    "timeout": 2500,
+    "on_error": ["EatApple_Back"]
+  },
+
+  "EatApple_Day_Check": {
+    "doc": "识别到天数标识，说明没有可使用的小时道具",
+    "recognition": "OCR",
+    "expected": "天",
+    "roi": [47,280,27,31],
+    "action": "DoNothing",
+    "next": ["EatApple_Back"]
+  },
+
+  "EatApple_Back": {
+    "doc": "没有更多小时道具时返回主界面",
+    "recognition": "DirectHit",
+    "roi": [30,11,61,54],
+    "action": "Click",
+    "target": [60,38],
+    "post_wait_freezes": {
+      "time": 300,
+      "target": [0,0,736,1308]
+    },
+    "next": ["EatApple_Home_Verify"]
+  },
+
+  "EatApple_Home_Verify": {
+    "doc": "确认已经返回游戏首页",
+    "recognition": "OCR",
+    "expected": "相伴",
+    "roi": [564,1215,111,55],
+    "action": "StopTask",
+    "timeout": 5000
+  }
+}

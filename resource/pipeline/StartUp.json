@@ -1,0 +1,168 @@
+{
+  "GYStartUp": {
+    "doc": "启动流程入口：判断 QQ、SSO、公告、奖励弹窗或已在首页",
+    "next": [
+      "GY_Start_QQ",
+      "GY_Start_OK",
+      "GY_SystemNotice_Verify",
+      "GY_Checkin_Reward",
+      "GY_Home_Verify"
+    ],
+    "timeout": 5000,
+    "on_error": ["GY_Startup_Back"]
+  },
+
+  "GY_Startup_Back": {
+    "doc": "启动前不在可识别页面时返回并重试入口",
+    "recognition": "DirectHit",
+    "roi": [30, 10, 61, 54],
+    "action": "Click",
+    "target": [60, 38],
+    "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+    "next": ["GYStartUp"]
+  },
+
+  "GY_Start_QQ": {
+    "doc": "识别并点击 QQ 登录",
+    "recognition": "OCR",
+    "expected": "QQ登录",
+    "roi": [417, 1029, 263, 53],
+    "action": "Click",
+    "post_wait_freezes": {"time": 800, "target": [0, 0, 736, 1308]},
+    "next": ["GY_StartQQ_Agreement_Choose"]
+  },
+
+  "GY_StartQQ_Agreement_Choose": {
+    "doc": "QQ登录后判断是否出现额外用户协议",
+    "next": ["GY_StartQQ_Agreement_Confirm", "GY_Start_Choose"]
+  },
+
+  "GY_StartQQ_Agreement_Confirm": {
+    "doc": "识别额外用户协议中的同意按钮并点击",
+    "recognition": "OCR",
+    "expected": "同意",
+    "roi": [375, 950, 270, 100],
+    "action": "Click",
+    "target": [505, 1000],
+    "post_wait_freezes": {"time": 800, "target": [0, 0, 736, 1308]},
+    "next": ["GY_Start_Choose"]
+  },
+
+  "GY_Start_Choose": {
+    "doc": "判断 QQ 协议页面或直接进入游戏",
+    "next": [
+      "GY_StartQQ_IFELSE",
+      "GY_Start_OK"
+    ]
+  },
+
+  "GY_StartQQ_IFELSE": {
+    "doc": "识别 QQ 用户协议页面",
+    "recognition": "OCR",
+    "expected": "用户协议及隐私保护指引",
+    "roi": [70, 300, 380, 53],
+    "action": "DoNothing",
+    "next": ["GY_StartQQ_Confirm"]
+  },
+
+  "GY_StartQQ_Confirm": {
+    "doc": "确认第一次用户协议",
+    "recognition": "OCR",
+    "expected": "同意",
+    "roi": [385, 914, 255, 62],
+    "action": "Click",
+    "pre_delay": 3000,
+    "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+    "next": ["QQ_Confirm1"]
+  },
+
+  "QQ_Confirm1": {
+    "doc": "确认第二次用户协议",
+    "recognition": "OCR",
+    "expected": "同意",
+    "roi": [270, 1110, 198, 59],
+    "action": "Click",
+    "next": ["QQ_Confirm2"]
+  },
+
+  "QQ_Confirm2": {
+    "doc": "完成 QQ 协议确认并进入游戏",
+    "recognition": "OCR",
+    "expected": "同意",
+    "roi": [262, 1093, 211, 52],
+    "action": "Click",
+    "pre_delay": 1000,
+    "post_wait_freezes": {"time": 800, "target": [0, 0, 736, 1308]},
+    "next": ["GY_Start_OK"]
+  },
+
+  "GY_Start_OK": {
+    "doc": "识别并点击 Touch to Start",
+    "recognition": "OCR",
+    "expected": "Touch to Start",
+    "roi": [170, 1019, 395, 79],
+    "action": "Click",
+    "pre_delay": 1000,
+    "post_wait_freezes": {"time": 2500, "target": [0, 0, 736, 1308]},
+    "next": ["GY_Start_Loading_Choose"]
+  },
+
+  "GY_Start_Loading_Choose": {
+    "doc": "登录后循环判断系统公告、奖励弹窗、首页或签到页面",
+    "next": [
+      "GY_SystemNotice_Verify",
+      "GY_Checkin_Reward",
+      "GY_Home_Verify",
+      "GY_Checkin_ViewAll"
+    ]
+  },
+
+  "GY_SystemNotice_Verify": {
+    "doc": "识别系统公告页面",
+    "recognition": "OCR",
+    "expected": "系统公告",
+    "roi": [350, 90, 320, 100],
+    "action": "DoNothing",
+    "timeout": 1000,
+    "next": ["GY_SystemNotice_Close"]
+  },
+
+  "GY_Home_Verify": {
+    "doc": "识别二次登录后的首页",
+    "recognition": "OCR",
+    "expected": "信使巡游",
+    "roi": [580, 880, 150, 100],
+    "action": "StopTask",
+    "timeout": 10000
+  },
+
+  "GY_SystemNotice_Close": {
+    "doc": "点击系统公告底部的 X",
+    "recognition": "DirectHit",
+    "roi": [330, 1120, 75, 85],
+    "action": "Click",
+    "target": [368, 1160],
+    "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+    "next": ["GY_Start_Loading_Choose"]
+  },
+
+  "GY_Checkin_Reward": {
+    "doc": "识别并关闭一个恭喜获得弹窗；随后回到分发节点继续检查，直到奖励全部清空",
+    "recognition": "OCR",
+    "expected": "恭喜获得",
+    "roi": [220, 350, 310, 100],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+    "next": ["GY_Start_Loading_Choose"],
+    "timeout": 5000
+  },
+  "GY_Checkin_ViewAll": {
+    "doc": "点击签到页面下方空白",
+    "recognition": "DirectHit",
+    "roi": [101,1150,450,48],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0, 0, 736, 1308]},
+    "next": ["GY_Start_Loading_Choose"],
+    "timeout": 5000
+  }
+}

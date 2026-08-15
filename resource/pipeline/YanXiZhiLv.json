@@ -1,0 +1,188 @@
+{
+  "YXZL": {
+    "doc": "研习之旅任务入口",
+    "next": ["YXZL_Home_Dispatch"]
+  },
+
+  "YXZL_Home_Dispatch": {
+    "doc": "研习之旅必须从 Home2 开始。",
+    "next": ["YXZL_Home_Check", "YXZL_Home1_Check", "YXZL_Home_Back"]
+  },
+
+  "YXZL_Home_Check": {
+    "doc": "确认当前位于 Home2。",
+    "recognition": "OCR",
+    "expected": "星座",
+    "roi": [17,997,87,53],
+    "action": "DoNothing",
+    "timeout": 1500,
+    "next": ["YXZL_Start_Touch"]
+  },
+
+  "YXZL_Home1_Check": {
+    "doc": "识别 Home1 后切换到 Home2。",
+    "recognition": "OCR",
+    "expected": "变奏",
+    "roi": [19,969,146,73],
+    "action": "DoNothing",
+    "next": ["YXZL_Home1_To_Home2"]
+  },
+
+  "YXZL_Home1_To_Home2": {
+    "doc": "Home1 切换到 Home2，并重新识别确认。",
+    "recognition": "DirectHit",
+    "roi": [352,1061,32,31],
+    "target": [359,1070],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["YXZL_Home_Check"]
+  },
+
+  "YXZL_Home_Back": {
+    "doc": "不在首页时返回并重新检查",
+    "recognition": "DirectHit",
+    "roi": [34,9,60,60],
+    "action": "Click",
+    "target": [60,38],
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["YXZL_Home_Dispatch"]
+  },
+
+  "YXZL_Start_Touch": {
+    "doc": "从主界面进入研习之旅",
+    "recognition": "OCR",
+    "expected": "研习之旅",
+    "roi": [532, 927, 195, 76],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 800,
+      "target": [532, 927, 195, 76]
+    },
+    "next": ["YXZL_Speedup_Click"]
+  },
+
+  "YXZL_Speedup_Click": {
+    "doc": "识别并点击地图左下角的加速按钮",
+    "recognition": "OCR",
+    "expected": "加速",
+    "roi": [155,1175,115,105],
+    "action": "Click",
+    "target": [208, 1238],
+    "post_wait_freezes": {
+      "time": 800,
+      "target":[155,1175,115,105]
+    },
+    "next": ["YXZL_Speedup_Choose"]
+  },
+
+  "YXZL_Speedup_Choose": {
+    "doc": "判断是否还有免费加速次数",
+    "next": [
+      "YXZL_Speedup_Free",
+      "YXZL_Speedup_NoCount"
+    ]
+  },
+
+  "YXZL_Speedup_Free": {
+    "doc": "有剩余次数时点击免费使用",
+    "recognition": "OCR",
+    "expected": "免费使用",
+    "roi": [238,810,261,63],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 800,
+      "target": [238,810,261,63]
+    },
+    "next": ["YXZL_Speedup_Reward"]
+  },
+
+  "YXZL_Speedup_NoCount": {
+    "doc": "没有剩余次数时识别今日剩余次数",
+    "recognition": "OCR",
+    "expected": "0",
+    "roi":  [434,660,35,32],
+    "action": "DoNothing",
+    "next": ["YXZL_Next_Area"]
+  },
+
+  "YXZL_Next_Area": {
+    "doc": "没有加速次数时点击下一地区关闭弹窗",
+    "recognition": "OCR",
+    "expected": "下一地区",
+    "roi": [520, 1150, 216, 158],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [520, 1150, 216, 158]
+    },
+    "next": ["YXZL_Back"]
+  },
+
+  "YXZL_Speedup_Reward": {
+    "doc": "关闭加速后出现的恭喜获得弹窗",
+    "recognition": "OCR",
+    "expected": "恭喜获得",
+    "roi": [243,377,247,54],
+    "target": [ 250, 382],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [0,0,736,1308]
+    },
+    "next": ["YXZL_Study_Click"]
+  },
+
+  "YXZL_Study_Click": {
+    "doc": "统一识别研习状态并进入领取流程",
+    "recognition": "DirectHit",
+    "roi": [17,1118,114,50],
+    "target": [65, 1115],
+    "action": "Click",
+    "timeout": 3000,
+    "next": ["YXZL_Claim"]
+  },
+
+  "YXZL_Claim": {
+    "doc": "识别研习奖励弹窗中的领取按钮",
+    "recognition": "OCR",
+    "expected": "领取",
+    "roi": [240,840,258,61],
+    "action": "Click",
+    "next": ["YXZL_Claim_Reward"]
+  },
+
+  "YXZL_Claim_Reward": {
+    "doc": "关闭领取奖励后的恭喜获得弹窗",
+    "recognition": "OCR",
+    "expected": "恭喜获得",
+    "roi": [237,283,258,58],
+    "action": "Click",
+    "post_wait_freezes": {
+      "time": 500,
+      "target": [237,283,258,58]
+    },
+    "next": ["YXZL_Back"]
+  },
+
+  "YXZL_Back": {
+    "doc": "点击左上角返回按钮",
+    "recognition": "DirectHit",
+    "roi": [34,9,60,60],
+    "action": "Click",
+    "target": [59, 39],
+    "post_wait_freezes": {
+      "time": 500,
+      "target":[34,9,60,60]
+    },
+    "next": ["YXZL_Home_Verify"]
+  },
+
+  "YXZL_Home_Verify": {
+    "doc": "确认已经回到主界面并识别研习之旅入口",
+    "recognition": "OCR",
+    "expected": "研习之旅",
+    "roi": [537,923,181,88],
+    "action": "StopTask",
+    "timeout": 5000
+  }
+}

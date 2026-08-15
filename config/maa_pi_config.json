@@ -1,0 +1,26 @@
+{
+    "resource": "Default",
+    "controller": "Android",
+    "adb": {
+        "adb_path": "E:/MuMu Player 12/nx_main/adb.exe",
+        "address": "127.0.0.1:16384",
+        "screencap": "64",
+        "input": "18446744073709551607",
+        "config": {
+            "extras": {
+                "mumu": {
+                    "enable": true,
+                    "index": 0,
+                    "path": "E:/MuMu Player 12"
+                }
+            }
+        }
+    },
+    "task": [
+        {
+            "name": "计划领取",
+            "option": {},
+            "__key": "62ba5e92-9910-4063-bb18-9c637c7b29d7"
+        }
+    ]
+}

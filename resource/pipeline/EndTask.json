@@ -1,0 +1,72 @@
+{
+  "EndTask": {
+    "doc": "收尾任务入口：Home1/Home2 均可，从底栏进入计划并领取奖励。",
+    "next": ["EndTask_Home_Check"],
+    "timeout": 1500,
+    "on_error": ["EndTask_Home_Back"]
+  },
+  "EndTask_Home_Check": {
+    "doc": "相伴在 Home1/Home2 均存在，用于确认当前位于首页。",
+    "recognition": "OCR",
+    "expected": "相伴",
+    "roi": [564,1215,111,55],
+    "action": "DoNothing",
+    "next": ["EndTask_Plan_Enter"]
+  },
+  "EndTask_Home_Back": {
+    "doc": "不在首页时点击左上角返回并重新检查。",
+    "recognition": "DirectHit",
+    "roi": [30,10,63,65],
+    "target": [60,38],
+    "action": "Click",
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["EndTask"]
+  },
+  "EndTask_Plan_Enter": {
+    "doc": "在首页最下方栏点击计划；计划位于物品左侧。",
+    "recognition": "OCR",
+    "expected": "计划",
+    "roi": [269,1249,53,33],
+    "target": [240, 1232],
+    "action": "Click",
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["EndTask_Plan_Verify"]
+  },
+  "EndTask_Plan_Verify": {
+    "doc": "识别一键领取按钮",
+    "recognition": "OCR",
+    "expected": "领取",
+    "roi": [520,1205,130,32],
+    "action": "DoNothing",
+    "next": ["EndTask_Claim"]
+  },
+  "EndTask_Claim": {
+    "doc": "一键领取",
+    "recognition": "OCR",
+    "expected": "领取",
+    "roi":[520,1205,137,30],
+    "action": "Click",
+    "target": true,
+    "post_wait_freezes": {"time": 800, "target": [0,0,736,1308]},
+    "next": ["EndTask_Reward_Dispatch"]
+  },
+  "EndTask_Reward_Dispatch": {
+    "doc": "有恭喜获得则点击并继续检查；没有时结束任务。",
+    "next": ["EndTask_Reward_Click", "EndTask_Done"]
+  },
+  "EndTask_Reward_Click": {
+    "doc": "复用商城奖励弹窗的恭字 ROI。",
+    "recognition": "OCR",
+    "expected": "恭",
+    "roi": [247,384,40,39],
+    "action": "Click",
+    "target": true,
+    "timeout": 1500,
+    "post_wait_freezes": {"time": 500, "target": [0,0,736,1308]},
+    "next": ["EndTask_Reward_Dispatch"]
+  },
+  "EndTask_Done": {
+    "doc": "计划奖励领取结束；停留在计划页面。",
+    "action": "StopTask"
+  }
+}
